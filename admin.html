@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SatoshiAI Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050508;--surface:rgba(20,15,40,0.9);--border:rgba(123,47,255,0.3);--purple:#7B2FFF;--cyan:#00D4FF;--green:#00FF88;--red:#FF4444;--text:#fff;--text2:#a0a8d9;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-image:linear-gradient(rgba(123,47,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(123,47,255,.04) 1px,transparent 1px);background-size:40px 40px;}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+.login-box{background:var(--surface);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:24px;padding:3rem;width:100%;max-width:400px;text-align:center;}
+.login-logo{width:80px;height:80px;border-radius:50%;border:3px solid var(--purple);box-shadow:0 0 30px rgba(123,47,255,.5);margin:0 auto 1.5rem;}
+.login-box h1{font-family:'Orbitron',sans-serif;font-size:1.4rem;background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem;}
+.login-box p{color:var(--text2);font-size:.9rem;margin-bottom:2rem;}
+.input-group{margin-bottom:1.2rem;text-align:left;}
+.input-group label{display:block;font-size:.85rem;color:var(--text2);margin-bottom:.4rem;font-weight:500;}
+.input-group input{width:100%;padding:.85rem 1rem;background:rgba(123,47,255,.08);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.95rem;outline:none;transition:border-color .3s;}
+.input-group input:focus{border-color:var(--purple);}
+.btn-login{width:100%;padding:.9rem;background:linear-gradient(135deg,var(--purple),#5A1FD9);border:none;border-radius:10px;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;transition:all .3s;margin-top:.5rem;}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(123,47,255,.4);}
+.login-error{color:var(--red);font-size:.85rem;margin-top:.8rem;display:none;}
+.login-error.show{display:block;}
+
+/* ADMIN PANEL */
+#adminPanel{display:none;min-height:100vh;}
+.admin-nav{background:rgba(5,5,8,.95);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.admin-nav .brand{font-family:'Orbitron',sans-serif;font-size:1.1rem;background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.btn-logout{padding:.5rem 1.2rem;background:rgba(255,68,68,.1);border:1px solid var(--red);border-radius:8px;color:var(--red);cursor:pointer;font-family:'Outfit',sans-serif;font-size:.9rem;transition:all .3s;}
+.btn-logout:hover{background:rgba(255,68,68,.2);}
+.admin-body{max-width:900px;margin:0 auto;padding:2rem;}
+.admin-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.8rem;margin-bottom:1.5rem;}
+.admin-section h2{font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--purple);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.field{margin-bottom:1.2rem;}
+.field label{display:block;font-size:.85rem;color:var(--text2);margin-bottom:.4rem;font-weight:500;}
+.field input,.field textarea,.field select{width:100%;padding:.8rem 1rem;background:rgba(123,47,255,.08);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;}
+.field input:focus,.field textarea:focus{border-color:var(--purple);}
+.field textarea{resize:vertical;min-height:80px;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;background:rgba(123,47,255,.06);border-radius:10px;margin-bottom:1rem;}
+.toggle-row span{font-size:.95rem;}
+.toggle{position:relative;width:48px;height:26px;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:rgba(123,47,255,.2);border-radius:26px;transition:.3s;}
+.toggle-slider::before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+.toggle input:checked+.toggle-slider{background:var(--purple);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(22px);}
+.btn-save{padding:.8rem 2rem;background:linear-gradient(135deg,var(--purple),#5A1FD9);border:none;border-radius:10px;color:#fff;font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;transition:all .3s;font-size:.95rem;}
+.btn-save:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(123,47,255,.4);}
+.btn-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:1rem;}
+.save-msg{font-size:.85rem;color:var(--green);display:none;}
+.save-msg.show{display:block;}
+.info-box{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:.88rem;color:var(--text2);}
+.info-box strong{color:var(--cyan);}
+.preview-box{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.2);border-radius:10px;padding:1rem;font-family:monospace;font-size:.8rem;color:var(--text2);word-break:break-all;max-height:200px;overflow-y:auto;}
+.badge-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem;}
+.badge{padding:.3rem .8rem;border-radius:20px;font-size:.75rem;font-weight:600;}
+.badge.green{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.3);}
+.badge.purple{background:rgba(123,47,255,.1);color:var(--purple);border:1px solid rgba(123,47,255,.3);}
+.badge.red{background:rgba(255,68,68,.1);color:var(--red);border:1px solid rgba(255,68,68,.3);}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <img src="satoshiai-logo.png" class="login-logo" alt="SatoshiAI">
+    <h1>Admin Panel</h1>
+    <p>SatoshiAI Website Management</p>
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password">
+    </div>
+    <button class="btn-login" id="loginBtn">Login to Admin Panel</button>
+    <p class="login-error" id="loginError">❌ Incorrect username or password</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="admin-nav">
+    <span class="brand">⚙️ SATOSHIAI ADMIN</span>
+    <button class="btn-logout" id="logoutBtn">Logout</button>
+  </div>
+  <div class="admin-body">
+
+    <!-- STATUS -->
+    <div class="admin-section">
+      <h2>📊 Site Status</h2>
+      <div class="badge-row">
+        <span class="badge green">✅ Site Live</span>
+        <span class="badge purple">🔗 Solana Mainnet</span>
+        <span class="badge green">👻 Phantom Enabled</span>
+      </div>
+      <div style="margin-top:1rem;font-size:.9rem;color:var(--text2);">
+        <p>Contract: <span style="color:var(--cyan);font-family:monospace;font-size:.8rem;">BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i</span></p>
+      </div>
+    </div>
+
+    <!-- ANNOUNCEMENT BANNER -->
+    <div class="admin-section">
+      <h2>📢 Announcement Banner</h2>
+      <div class="toggle-row">
+        <span>Enable Announcement Banner</span>
+        <label class="toggle"><input type="checkbox" id="annEnabled"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="field">
+        <label>Announcement Text</label>
+        <input type="text" id="annText" placeholder="e.g. 🚀 Airdrop is now LIVE! Join our Telegram to participate.">
+      </div>
+      <div class="field">
+        <label>Link URL (optional)</label>
+        <input type="text" id="annLink" placeholder="e.g. https://t.me/satosiiAI">
+      </div>
+      <div class="btn-row">
+        <button class="btn-save" onclick="saveSection('announcement')">Save Banner</button>
+        <span class="save-msg" id="announcement-msg">✅ Saved!</span>
+      </div>
+    </div>
+
+    <!-- SOCIAL LINKS -->
+    <div class="admin-section">
+      <h2>🔗 Social Media Links</h2>
+      <div class="field"><label>Telegram URL</label><input type="text" id="socialTelegram" placeholder="https://t.me/satosiiAI"></div>
+      <div class="field"><label>Twitter / X URL</label><input type="text" id="socialTwitter" placeholder="https://x.com/satosi_ai"></div>
+      <div class="field"><label>Discord URL</label><input type="text" id="socialDiscord" placeholder="https://discord.gg/..."></div>
+      <div class="btn-row">
+        <button class="btn-save" onclick="saveSection('social')">Save Links</button>
+        <span class="save-msg" id="social-msg">✅ Saved!</span>
+      </div>
+    </div>
+
+    <!-- GOOGLE ANALYTICS -->
+    <div class="admin-section">
+      <h2>📈 Google Analytics</h2>
+      <div class="info-box"><strong>How to get your GA4 ID:</strong> Go to analytics.google.com → Admin → Create Property → Copy Measurement ID (starts with G-)</div>
+      <div class="field"><label>GA4 Measurement ID</label><input type="text" id="gaId" placeholder="G-XXXXXXXXXX"></div>
+      <div class="btn-row">
+        <button class="btn-save" onclick="saveSection('analytics')">Save Analytics</button>
+        <span class="save-msg" id="analytics-msg">✅ Saved!</span>
+      </div>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div class="admin-section">
+      <h2>🔐 Change Admin Password</h2>
+      <div class="field"><label>New Password</label><input type="password" id="newPass" placeholder="Enter new password"></div>
+      <div class="field"><label>Confirm New Password</label><input type="password" id="confirmPass" placeholder="Confirm new password"></div>
+      <div class="btn-row">
+        <button class="btn-save" onclick="changePassword()">Update Password</button>
+        <span class="save-msg" id="password-msg">✅ Password updated!</span>
+      </div>
+    </div>
+
+    <!-- EXPORT CONFIG -->
+    <div class="admin-section">
+      <h2>📦 Export Config File</h2>
+      <div class="info-box">
+        <strong>How to apply changes to your live site:</strong><br>
+        1. Make your changes in the sections above and click Save.<br>
+        2. Click "Download config.json" below.<br>
+        3. Upload the downloaded file to your Netlify site (drag & drop).<br>
+        4. Your site updates automatically within seconds.
+      </div>
+      <div class="preview-box" id="configPreview"></div>
+      <div class="btn-row" style="margin-top:1rem;">
+        <button class="btn-save" onclick="downloadConfig()">⬇️ Download config.json</button>
+        <span class="save-msg" id="export-msg">✅ Downloaded!</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// DEFAULT CREDENTIALS (stored in localStorage — changeable)
+const DEFAULT_USER = 'admin';
+const DEFAULT_PASS = 'SatoshiAI2026!';
+
+// STATE
+let cfg = {
+  announcement: { enabled: false, text: '', link: '' },
+  social: { telegram: 'https://t.me/satosiiAI', twitter: 'https://x.com/satosi_ai', discord: '#' },
+  analytics: { gaId: '' }
+};
+
+// LOAD FROM LOCALSTORAGE
+function loadState() {
+  const saved = localStorage.getItem('satoshi_cfg');
+  if (saved) cfg = JSON.parse(saved);
+  populateFields();
+  updatePreview();
+}
+
+function populateFields() {
+  document.getElementById('annEnabled').checked = cfg.announcement.enabled;
+  document.getElementById('annText').value = cfg.announcement.text || '';
+  document.getElementById('annLink').value = cfg.announcement.link || '';
+  document.getElementById('socialTelegram').value = cfg.social.telegram || '';
+  document.getElementById('socialTwitter').value = cfg.social.twitter || '';
+  document.getElementById('socialDiscord').value = cfg.social.discord === '#' ? '' : (cfg.social.discord || '');
+  document.getElementById('gaId').value = cfg.analytics.gaId || '';
+}
+
+// SAVE SECTIONS
+function saveSection(section) {
+  if (section === 'announcement') {
+    cfg.announcement.enabled = document.getElementById('annEnabled').checked;
+    cfg.announcement.text = document.getElementById('annText').value.trim();
+    cfg.announcement.link = document.getElementById('annLink').value.trim();
+  } else if (section === 'social') {
+    cfg.social.telegram = document.getElementById('socialTelegram').value.trim() || 'https://t.me/satosiiAI';
+    cfg.social.twitter = document.getElementById('socialTwitter').value.trim() || 'https://x.com/satosi_ai';
+    const dc = document.getElementById('socialDiscord').value.trim();
+    cfg.social.discord = dc || '#';
+  } else if (section === 'analytics') {
+    cfg.analytics.gaId = document.getElementById('gaId').value.trim();
+  }
+  localStorage.setItem('satoshi_cfg', JSON.stringify(cfg));
+  updatePreview();
+  showMsg(section);
+}
+
+function showMsg(id) {
+  const el = document.getElementById(id + '-msg');
+  if (!el) return;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function updatePreview() {
+  document.getElementById('configPreview').textContent = JSON.stringify(cfg, null, 2);
+}
+
+function downloadConfig() {
+  const blob = new Blob([JSON.stringify(cfg, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'config.json';
+  a.click();
+  showMsg('export');
+}
+
+function changePassword() {
+  const np = document.getElementById('newPass').value;
+  const cp = document.getElementById('confirmPass').value;
+  if (!np) { alert('Please enter a new password.'); return; }
+  if (np !== cp) { alert('Passwords do not match.'); return; }
+  if (np.length < 8) { alert('Password must be at least 8 characters.'); return; }
+  localStorage.setItem('satoshi_admin_pass', np);
+  document.getElementById('newPass').value = '';
+  document.getElementById('confirmPass').value = '';
+  showMsg('password');
+}
+
+// LOGIN
+function getPassword() {
+  return localStorage.getItem('satoshi_admin_pass') || DEFAULT_PASS;
+}
+
+document.getElementById('loginBtn').addEventListener('click', () => {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if (user === DEFAULT_USER && pass === getPassword()) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadState();
+  } else {
+    document.getElementById('loginError').classList.add('show');
+    setTimeout(() => document.getElementById('loginError').classList.remove('show'), 3000);
+  }
+});
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+});
+</script>
+</body>
+</html>

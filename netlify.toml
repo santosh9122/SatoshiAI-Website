@@ -1,0 +1,8 @@
+[build]
+  command = "echo 'Static site — no build step required'"
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/satoshiai-phase2.html"
+  status = 200

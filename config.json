@@ -1,0 +1,15 @@
+{
+  "announcement": {
+    "enabled": false,
+    "text": "🚀 SatoshiAI Airdrop is LIVE! Join our Telegram to participate.",
+    "link": "https://t.me/satosiiAI"
+  },
+  "social": {
+    "telegram": "https://t.me/satosiiAI",
+    "twitter": "https://x.com/satosi_ai",
+    "discord": "#"
+  },
+  "analytics": {
+    "gaId": ""
+  }
+}
