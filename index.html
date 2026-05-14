@@ -3,50 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SatoshiAI - AI + Web3 Ecosystem</title>
+<title>SatoshiAI - Web3 AI Ecosystem</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background:#0a0a0a;
+  background:#05060a;
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* background */
+/* particles bg */
 .bg{
   position:fixed;
   width:100%;
   height:100%;
-  background:radial-gradient(circle at top,#00e5ff22,transparent 60%);
+  background:radial-gradient(circle at top,#00e5ff22,transparent 60%),
+             radial-gradient(circle at bottom,#ff00ff22,transparent 60%);
+  animation:move 10s infinite alternate;
   z-index:-1;
+}
+@keyframes move{
+  from{transform:scale(1);}
+  to{transform:scale(1.08);}
 }
 
 /* layout */
 .section{
-  padding:60px 20px;
+  padding:70px 20px;
   max-width:1100px;
   margin:auto;
 }
 
-h1,h2,h3{color:#00e5ff}
-
-/* buy button */
-.btn{
-  display:inline-block;
-  padding:14px 28px;
-  background:#00e5ff;
-  color:#000;
-  font-weight:bold;
-  border-radius:12px;
-  text-decoration:none;
+/* glass */
+.glass{
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  border-radius:16px;
+  backdrop-filter: blur(10px);
   margin-top:20px;
   transition:0.3s;
 }
-.btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00e5ff;
-}
+.glass:hover{transform:translateY(-5px);}
 
 /* grid */
 .grid{
@@ -55,32 +54,69 @@ h1,h2,h3{color:#00e5ff}
   gap:20px;
 }
 
-.card{
-  background:rgba(255,255,255,0.05);
-  padding:20px;
-  border-radius:14px;
+/* buttons */
+.btn{
+  display:inline-block;
+  padding:14px 28px;
+  background:#00e5ff;
+  color:#000;
+  font-weight:bold;
+  border-radius:12px;
+  text-decoration:none;
+  margin:10px;
+  transition:0.3s;
+}
+.btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #00e5ff;
 }
 
-/* AI images */
-.ai-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.ai-img{
-  width:100%;
-  border-radius:14px;
-  box-shadow:0 0 20px rgba(0,229,255,0.2);
+/* wallet */
+.wallet{
+  background:#111;
+  padding:12px 18px;
+  border-radius:10px;
+  display:inline-block;
+  cursor:pointer;
 }
 
 /* price */
 #price{color:#00ff99;font-weight:bold}
 
+/* roadmap */
+.timeline{
+  border-left:2px solid #00e5ff;
+  padding-left:20px;
+}
+.step{margin-bottom:25px;}
+
+/* token bars */
+.bar{height:10px;background:#222;border-radius:10px;}
+.fill{height:10px;background:#00e5ff;}
+
+/* ai images */
+.ai-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.ai-img{
+  width:100%;
+  border-radius:14px;
+}
+
+/* staking */
+.stake{
+  background:#111;
+  padding:20px;
+  border-radius:12px;
+  border:1px solid #00e5ff33;
+}
+
 /* footer */
 footer{
   text-align:center;
-  padding:30px;
+  padding:40px;
   opacity:0.6;
 }
 </style>
@@ -92,12 +128,41 @@ footer{
 
 <!-- HERO -->
 <div class="section" style="text-align:center;">
-  <h1>🤖 SatoshiAI</h1>
-  <p>AI + Web3 Ecosystem on Solana</p>
+  <h1>🚀 SatoshiAI</h1>
+  <p>AI + Web3 Next Generation Ecosystem</p>
 
   <a class="btn" href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i">
     🚀 Buy satAI
   </a>
+
+  <div class="wallet">🔗 Connect Wallet (Phantom Ready)</div>
+</div>
+
+<!-- LIVE PRICE -->
+<div class="section" style="text-align:center;">
+  <h2>💰 Live Price: $<span id="price">Loading...</span></h2>
+</div>
+
+<!-- HOLDERS + MARKET CAP (UI READY) -->
+<div class="section">
+  <div class="grid">
+
+    <div class="glass">
+      <h3>📊 Market Cap</h3>
+      <p>$-- (API coming)</p>
+    </div>
+
+    <div class="glass">
+      <h3>👥 Holders</h3>
+      <p>-- wallets</p>
+    </div>
+
+    <div class="glass">
+      <h3>💧 Liquidity</h3>
+      <p>Auto tracking</p>
+    </div>
+
+  </div>
 </div>
 
 <!-- AI SECTION -->
@@ -106,22 +171,19 @@ footer{
 
   <div class="ai-grid">
 
-    <div>
-      <img class="ai-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995" />
-      <h3>AI Chat Assistant</h3>
-      <p>Real-time intelligent crypto assistant</p>
+    <div class="glass">
+      <img class="ai-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+      <h3>AI Trading Engine</h3>
     </div>
 
-    <div>
-      <img class="ai-img" src="https://images.unsplash.com/photo-1676299081847-824916de030a" />
-      <h3>AI Trading System</h3>
-      <p>Smart automated trading signals</p>
-    </div>
-
-    <div>
-      <img class="ai-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?2" />
+    <div class="glass">
+      <img class="ai-img" src="https://images.unsplash.com/photo-1676299081847-824916de030a">
       <h3>Meme AI Generator</h3>
-      <p>Create viral crypto memes instantly</p>
+    </div>
+
+    <div class="glass">
+      <img class="ai-img" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
+      <h3>AI Analytics</h3>
     </div>
 
   </div>
@@ -135,31 +197,66 @@ footer{
     src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
     width="100%"
     height="500"
-    style="border:none;border-radius:12px;">
+    style="border:none;border-radius:14px;">
   </iframe>
 </div>
 
-<!-- LIVE PRICE -->
-<div class="section" style="text-align:center;">
-  <h2>💰 Live Price: $<span id="price">Loading...</span></h2>
-</div>
-
-<!-- UTILITY -->
+<!-- TOKENOMICS -->
 <div class="section">
-  <h2>⚡ Utility</h2>
+  <h2>📊 Tokenomics</h2>
 
   <div class="grid">
-    <div class="card">🧠 AI Tools & Chatbot</div>
-    <div class="card">💰 Staking & Rewards</div>
-    <div class="card">🔗 Web3 Integration</div>
+
+    <div class="glass">Vault 45%<div class="bar"><div class="fill" style="width:45%"></div></div></div>
+    <div class="glass">Liquidity 20%<div class="bar"><div class="fill" style="width:20%"></div></div></div>
+    <div class="glass">Dev 15%<div class="bar"><div class="fill" style="width:15%"></div></div></div>
+    <div class="glass">Marketing 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
+    <div class="glass">Team 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
+
+  </div>
+</div>
+
+<!-- STAKING DASHBOARD -->
+<div class="section">
+  <h2>💰 Staking Dashboard</h2>
+
+  <div class="stake">
+    <h3>APY: 120% (UI)</h3>
+    <button class="btn">Stake satAI</button>
+    <button class="btn">Unstake</button>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section">
+  <h2>🚀 Roadmap</h2>
+
+  <div class="timeline">
+    <div class="step glass"><h3>Phase 1</h3><p>Launch + Branding</p></div>
+    <div class="step glass"><h3>Phase 2</h3><p>Community + Growth</p></div>
+    <div class="step glass"><h3>Phase 3</h3><p>AI Utility Launch</p></div>
+    <div class="step glass"><h3>Phase 4</h3><p>CEX Listing + Global Expansion</p></div>
+  </div>
+</div>
+
+<!-- WHITEPAPER -->
+<div class="section">
+  <h2>📄 Whitepaper</h2>
+  <div class="glass">
+    <p>
+      SatoshiAI is an advanced AI + Web3 ecosystem built on Solana,
+      combining automation, intelligence, and decentralized finance
+      into a scalable blockchain infrastructure.
+    </p>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  © 2026 SatoshiAI • AI + Web3 Powered
+© 2026 SatoshiAI • Ultra Web3 AI Ecosystem
 </footer>
 
+<!-- PRICE SCRIPT -->
 <script>
 async function getPrice(){
   try{
@@ -168,10 +265,8 @@ async function getPrice(){
     const data=await res.json();
 
     if(data.pairs && data.pairs.length>0){
-      document.getElementById("price").innerText =
+      document.getElementById("price").innerText=
       parseFloat(data.pairs[0].priceUsd).toFixed(6);
-    } else {
-      document.getElementById("price").innerText="N/A";
     }
   }catch(e){
     document.getElementById("price").innerText="Error";
