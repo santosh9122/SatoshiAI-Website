@@ -533,6 +533,39 @@ const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+<script>
+
+// 💰 LIVE PRICE (ADD HERE - ABOVE EXISTING CODE)
+async function getPrice() {
+
+const ca = "BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
+
+const res = await fetch(
+`https://api.dexscreener.com/latest/dex/tokens/${ca}`
+);
+
+const data = await res.json();
+
+if (data.pairs && data.pairs.length > 0) {
+document.getElementById("price").innerText =
+parseFloat(data.pairs[0].priceUsd).toFixed(6);
+}
+
+}
+
+getPrice();
+setInterval(getPrice, 10000);
+
+
+// 👇 YOUR EXISTING CODE (DON'T TOUCH)
+const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+        if(e.isIntersecting)e.target.classList.add('visible');
+    });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+
 </script>
 </body>
 </html>
