@@ -200,35 +200,16 @@
             .stats-bar{grid-template-columns:1fr;}
             .features-grid,.tknm-grid,.utility-grid,.footer-grid{grid-template-columns:1fr;}
         }
-    <style>
-.buy-btn{
-  display:inline-block;
-  padding:14px 28px;
-  background:#00e5ff;
-  color:#000;
-  font-weight:bold;
-  border-radius:14px;
-  text-decoration:none;
-  margin-top:20px;
-  transition:0.3s;
-}
-
-.buy-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00e5ff;
-}
-</style>
-
+    </style>
 </head>
 <body>
-
 <div class="animated-bg"></div>
 <div class="circuit-pattern"></div>
 <div class="glow-orb a"></div>
 <div class="glow-orb b"></div>
 <div id="particles"></div>
-
 <button id="backToTop" title="Back to top">↑</button>
+
 <!-- Announcement Banner -->
 <div id="announcementBanner"><span id="annText"></span></div>
 
@@ -337,84 +318,28 @@
   </div>
 </div>
 
-<!-- Live Chart -->
+<!-- Chart -->
 <div class="section-wrap">
   <div class="chart-box glass fade-in">
-
     <h3>📊 Live Token Price Chart</h3>
-
-    <iframe
-      src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
-      width="100%"
-      height="600"
-      style="border:none;border-radius:20px;">
-    </iframe>
-
+    <p class="chart-sub">Real-time price data will be integrated after DEX listing</p>
+    <div class="chart-ph">
+      <div class="icon">📈</div>
+      <p><strong>Chart integration ready</strong></p>
+      <small>DexScreener / Jupiter — activating after listing</small>
+    </div>
   </div>
-</div>
-<!-- Buy Section -->
-<div class="section-wrap">
-  <div class="glass fade-in" style="text-align:center;padding:40px;">
-
-    <h2>🚀 Buy satAI Token</h2>
-
-    <p style="color:#aaa;margin-top:10px;">
-      Buy satAI directly on Raydium
-    </p>
-
-    <a
-      href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i"
-      target="_blank"
-      class="buy-btn">
-      🚀 Buy satAI
-    </a>
-
-  </div>
-</div>
-
-<!-- 💰 Live Price -->
-<div class="section-wrap" style="text-align:center;">
-  <h2>💰 Live Price: $<span id="price">Loading...</span></h2>
 </div>
 
 <!-- Utility -->
 <div class="section-wrap" id="utility">
   <h2 class="section-title">Token Utility</h2>
-
   <div class="utility-grid">
-
-    <div class="util-card glass fade-in">
-      <h3>🛠️ AI Tool Access</h3>
-      <ul>
-        <li>AI Chatbot — real-time crypto insights</li>
-        <li>Meme Generator AI</li>
-        <li>Telegram bot automation</li>
-        <li>Trading Signals (upcoming)</li>
-      </ul>
-    </div>
-
-    <div class="util-card glass fade-in">
-      <h3>💰 Reward System</h3>
-      <ul>
-        <li>Community incentive rewards</li>
-        <li>Airdrop participation</li>
-        <li>Staking & referral bonuses</li>
-        <li>DAO governance voting</li>
-      </ul>
-    </div>
-
-    <div class="util-card glass fade-in">
-      <h3>👑 Premium Access</h3>
-      <ul>
-        <li>Exclusive AI model access</li>
-        <li>Priority platform features</li>
-        <li>API integration for developers</li>
-        <li>Enterprise-grade solutions</li>
-      </ul>
-    </div>
-
+    <div class="util-card glass fade-in"><h3>🛠️ AI Tool Access</h3><ul><li>AI Chatbot — real-time crypto insights</li><li>Meme Generator AI</li><li>Telegram bot automation</li><li>Trading Signals (upcoming)</li></ul></div>
+    <div class="util-card glass fade-in"><h3>💰 Reward System</h3><ul><li>Community incentive rewards</li><li>Airdrop participation</li><li>Staking & referral bonuses</li><li>DAO governance voting</li></ul></div>
+    <div class="util-card glass fade-in"><h3>👑 Premium Access</h3><ul><li>Exclusive AI model access</li><li>Priority platform features</li><li>API integration for developers</li><li>Enterprise-grade solutions</li></ul></div>
   </div>
-</div> 
+</div>
 
 <!-- Roadmap -->
 <div class="section-wrap" id="roadmap">
@@ -572,39 +497,6 @@ const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
-<script>
-
-// 💰 LIVE PRICE (ADD HERE - ABOVE EXISTING CODE)
-async function getPrice() {
-
-const ca = "BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
-
-const res = await fetch(
-`https://api.dexscreener.com/latest/dex/tokens/${ca}`
-);
-
-const data = await res.json();
-
-if (data.pairs && data.pairs.length > 0) {
-document.getElementById("price").innerText =
-parseFloat(data.pairs[0].priceUsd).toFixed(6);
-}
-
-}
-
-getPrice();
-setInterval(getPrice, 10000);
-
-
-// 👇 YOUR EXISTING CODE (DON'T TOUCH)
-const io=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-        if(e.isIntersecting)e.target.classList.add('visible');
-    });
-},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-
-document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
-
 </script>
 </body>
 </html>
