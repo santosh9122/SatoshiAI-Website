@@ -14,25 +14,37 @@ color:#fff;
 overflow-x:hidden;
 }
 
-/* background animation */
 .bg{
 position:fixed;
 width:100%;
 height:100%;
-background:radial-gradient(circle at top,#00e5ff22,transparent 60%),
+background:
+radial-gradient(circle at top,#00e5ff22,transparent 60%),
 radial-gradient(circle at bottom,#ff00ff22,transparent 60%);
 animation:move 10s infinite alternate;
 z-index:-1;
 }
-@keyframes move{from{transform:scale(1);}to{transform:scale(1.1);}}
 
-/* layout */
-.section{padding:70px 20px;max-width:1100px;margin:auto;text-align:center}
+@keyframes move{
+from{transform:scale(1);}
+to{transform:scale(1.1);}
+}
 
-/* glass */
+.section{
+padding:60px 20px;
+max-width:1100px;
+margin:auto;
+text-align:center;
+}
+
+.hero{
+padding:80px 20px;
+text-align:center;
+}
+
 .glass{
 background:rgba(255,255,255,0.05);
-padding:25px;
+padding:20px;
 border-radius:16px;
 backdrop-filter:blur(12px);
 margin:10px;
@@ -40,10 +52,12 @@ transition:0.3s;
 }
 .glass:hover{transform:translateY(-5px);}
 
-/* grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
 
-/* buttons */
 .btn{
 display:inline-block;
 padding:14px 28px;
@@ -57,31 +71,55 @@ transition:0.3s;
 }
 .btn:hover{transform:scale(1.05);box-shadow:0 0 20px #00e5ff;}
 
-/* wallet */
 .wallet{
 background:#111;
 padding:12px 18px;
 border-radius:10px;
-display:inline-block;
 cursor:pointer;
+display:inline-block;
 }
 
-/* AI images */
-.ai-img{width:100%;border-radius:14px}
+#chatBox{
+height:200px;
+overflow:auto;
+background:#111;
+padding:10px;
+border-radius:10px;
+text-align:left;
+}
 
-/* bars */
-.bar{height:10px;background:#222;border-radius:10px}
-.fill{height:10px;background:#00e5ff}
+input{
+padding:10px;
+width:80%;
+border-radius:8px;
+border:none;
+margin-top:10px;
+}
 
-/* footer */
-footer{padding:40px;opacity:0.6}
+.bar{
+height:10px;
+background:#222;
+border-radius:10px;
+}
+.fill{
+height:10px;
+background:#00e5ff;
+}
+
+.ai-img{
+width:100%;
+border-radius:14px;
+}
+
+footer{
+padding:40px;
+text-align:center;
+opacity:0.6;
+}
+
 h2{color:#00e5ff}
 
-.social a{
-color:#00e5ff;
-margin:0 10px;
-text-decoration:none;
-}
+a{color:#00e5ff;text-decoration:none}
 </style>
 </head>
 
@@ -90,19 +128,18 @@ text-decoration:none;
 <div class="bg"></div>
 
 <!-- HERO -->
-<div class="section">
+<div class="hero">
 <h1>🚀 SatoshiAI</h1>
-<p>AI + Web3 Next Generation Ecosystem on Solana</p>
+<p>AI + Web3 Autonomous Ecosystem on Solana</p>
 
 <a class="btn" href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i">Buy satAI</a>
 
-<div class="wallet">🔗 Connect Wallet (Phantom Ready)</div>
+<div class="wallet" onclick="connectWallet()">🔗 Connect Phantom Wallet</div>
+<p id="walletAddress"></p>
 
-<div class="social">
-<br><br>
-<a href="https://t.me/satosiiAI">Telegram</a>
-<a href="https://x.com/satosi_ai">X (Twitter)</a>
-</div>
+<p style="margin-top:10px;color:#00e5ff;">
+CA: BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i
+</p>
 </div>
 
 <!-- LIVE PRICE -->
@@ -110,35 +147,52 @@ text-decoration:none;
 <h2>💰 Live Price: $<span id="price">Loading...</span></h2>
 </div>
 
-<!-- STATS -->
+<!-- AI IMAGES -->
 <div class="section">
+<h2>🤖 AI Ecosystem</h2>
+
 <div class="grid">
 
 <div class="glass">
-<h3>Market Cap</h3>
-<p id="marketcap">Loading...</p>
+<img class="ai-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+<p>AI Trading Engine</p>
 </div>
 
 <div class="glass">
-<h3>Liquidity</h3>
-<p id="liquidity">Loading...</p>
+<img class="ai-img" src="https://images.unsplash.com/photo-1676299081847-824916de030a">
+<p>Meme AI Generator</p>
 </div>
 
 <div class="glass">
-<h3>24H Volume</h3>
-<p id="volume">Loading...</p>
+<img class="ai-img" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
+<p>AI Analytics</p>
 </div>
 
 </div>
 </div>
 
-<!-- CHART -->
+<!-- UTILITY -->
 <div class="section">
-<h2>📊 Live Chart</h2>
-<iframe
-src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
-width="100%" height="500"
-style="border:none;border-radius:14px;"></iframe>
+<h2>⚡ Utility</h2>
+
+<div class="grid">
+
+<div class="glass">
+<h3>🧠 AI Tools</h3>
+<p>Trading signals, chatbot, meme generator</p>
+</div>
+
+<div class="glass">
+<h3>💰 Rewards</h3>
+<p>Staking, airdrop, referral system</p>
+</div>
+
+<div class="glass">
+<h3>🔗 Web3 Access</h3>
+<p>DAO voting, API access, ecosystem tools</p>
+</div>
+
+</div>
 </div>
 
 <!-- TOKENOMICS -->
@@ -146,74 +200,78 @@ style="border:none;border-radius:14px;"></iframe>
 <h2>📊 Tokenomics</h2>
 
 <div class="grid">
+
 <div class="glass">Vault 45%<div class="bar"><div class="fill" style="width:45%"></div></div></div>
 <div class="glass">Liquidity 20%<div class="bar"><div class="fill" style="width:20%"></div></div></div>
-<div class="glass">Development 15%<div class="bar"><div class="fill" style="width:15%"></div></div></div>
+<div class="glass">Dev 15%<div class="bar"><div class="fill" style="width:15%"></div></div></div>
 <div class="glass">Marketing 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
 <div class="glass">Team 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
+
 </div>
 </div>
 
-<!-- ROADMAP -->
+<!-- WHITEPAPER -->
 <div class="section">
-<h2>🚀 Roadmap</h2>
+<h2>📄 Whitepaper</h2>
 
-<div class="grid">
-<div class="glass">Phase 1: Launch</div>
-<div class="glass">Phase 2: Growth</div>
-<div class="glass">Phase 3: AI Utility</div>
-<div class="glass">Phase 4: Global Expansion</div>
+<div class="glass">
+<p>
+SatoshiAI is a next-generation AI + Web3 ecosystem built on Solana.
+It combines decentralized finance, automation, AI intelligence, and scalable blockchain utility.
+</p>
 </div>
 </div>
 
-<!-- FAQ -->
+<!-- SOCIAL -->
 <div class="section">
-<h2>❓ FAQ</h2>
+<h2>🌐 Community</h2>
 
-<div class="grid">
-
-<div class="glass">
-<h3>What is SatoshiAI?</h3>
-<p>AI + Web3 ecosystem built on Solana blockchain.</p>
+<a class="btn" href="https://t.me/satosiiAI">Telegram</a>
+<a class="btn" href="https://x.com/satosi_ai">X (Twitter)</a>
 </div>
 
-<div class="glass">
-<h3>How to buy?</h3>
-<p>Use Raydium swap with Phantom Wallet.</p>
-</div>
+<!-- CHART -->
+<div class="section">
+<h2>📊 Live Chart</h2>
 
-<div class="glass">
-<h3>Staking?</h3>
-<p>Coming soon with rewards system.</p>
-</div>
-
-</div>
+<iframe
+src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
+width="100%" height="450"
+style="border:none;border-radius:14px;">
+</iframe>
 </div>
 
 <!-- FOOTER -->
 <footer>
-© 2026 SatoshiAI Ecosystem • Built for Web3 Future
+© 2026 SatoshiAI Ecosystem • AI + Web3 Future
 </footer>
 
-<!-- SCRIPT -->
+<!-- WALLET -->
+<script>
+async function connectWallet(){
+try{
+if(window.solana && window.solana.isPhantom){
+const resp = await window.solana.connect();
+document.getElementById("walletAddress").innerText =
+"Connected: " + resp.publicKey.toString();
+}else{
+alert("Install Phantom Wallet");
+}
+}catch(e){}
+}
+</script>
+
+<!-- PRICE -->
 <script>
 async function getPrice(){
 const ca="BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
 
-try{
 const res=await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`);
 const data=await res.json();
 
 if(data.pairs && data.pairs.length>0){
-const pair=data.pairs[0];
-
-document.getElementById("price").innerText=parseFloat(pair.priceUsd).toFixed(6);
-document.getElementById("marketcap").innerText="$"+Number(pair.marketCap||0).toLocaleString();
-document.getElementById("liquidity").innerText="$"+Number(pair.liquidity?.usd||0).toLocaleString();
-document.getElementById("volume").innerText="$"+Number(pair.volume?.h24||0).toLocaleString();
-}
-}catch(e){
-document.getElementById("price").innerText="Error";
+document.getElementById("price").innerText =
+parseFloat(data.pairs[0].priceUsd).toFixed(6);
 }
 }
 
