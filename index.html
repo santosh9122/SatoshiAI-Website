@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SatoshiAI - AI + Web3 Ecosystem</title>
+<title>SatoshiAI - REAL Web3 dApp</title>
+
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 
 <style>
 body{
@@ -18,108 +20,36 @@ overflow-x:hidden;
 position:fixed;
 width:100%;
 height:100%;
-background:
-radial-gradient(circle at top,#00e5ff22,transparent 60%),
-radial-gradient(circle at bottom,#ff00ff22,transparent 60%);
-animation:move 10s infinite alternate;
+background:radial-gradient(circle,#00e5ff22,transparent 60%),
+radial-gradient(circle,#ff00ff22,transparent 60%);
 z-index:-1;
 }
 
-@keyframes move{
-from{transform:scale(1);}
-to{transform:scale(1.1);}
-}
-
-.section{
-padding:60px 20px;
-max-width:1100px;
-margin:auto;
-text-align:center;
-}
-
-.hero{
-padding:80px 20px;
-text-align:center;
-}
+.section{padding:60px 20px;max-width:1100px;margin:auto;text-align:center;}
 
 .glass{
 background:rgba(255,255,255,0.05);
 padding:20px;
 border-radius:16px;
-backdrop-filter:blur(12px);
 margin:10px;
-transition:0.3s;
-}
-.glass:hover{transform:translateY(-5px);}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+backdrop-filter:blur(12px);
 }
 
 .btn{
-display:inline-block;
-padding:14px 28px;
+padding:12px 20px;
 background:#00e5ff;
 color:#000;
-font-weight:bold;
-border-radius:12px;
-text-decoration:none;
-margin:10px;
-transition:0.3s;
-}
-.btn:hover{transform:scale(1.05);box-shadow:0 0 20px #00e5ff;}
-
-.wallet{
-background:#111;
-padding:12px 18px;
 border-radius:10px;
-cursor:pointer;
 display:inline-block;
+cursor:pointer;
+margin:10px;
 }
 
-#chatBox{
-height:200px;
-overflow:auto;
-background:#111;
-padding:10px;
-border-radius:10px;
-text-align:left;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
 
-input{
-padding:10px;
-width:80%;
-border-radius:8px;
-border:none;
-margin-top:10px;
-}
-
-.bar{
-height:10px;
-background:#222;
-border-radius:10px;
-}
-.fill{
-height:10px;
-background:#00e5ff;
-}
-
-.ai-img{
-width:100%;
-border-radius:14px;
-}
-
-footer{
-padding:40px;
-text-align:center;
-opacity:0.6;
-}
+img{width:100%;border-radius:12px;}
 
 h2{color:#00e5ff}
-
-a{color:#00e5ff;text-decoration:none}
 </style>
 </head>
 
@@ -128,68 +58,40 @@ a{color:#00e5ff;text-decoration:none}
 <div class="bg"></div>
 
 <!-- HERO -->
-<div class="hero">
-<h1>🚀 SatoshiAI</h1>
-<p>AI + Web3 Autonomous Ecosystem on Solana</p>
+<div class="section">
+<h1>🚀 SatoshiAI REAL Web3 dApp</h1>
 
-<a class="btn" href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i">Buy satAI</a>
+<div class="btn" onclick="connectWallet()">Connect Phantom Wallet</div>
+<p id="wallet"></p>
 
-<div class="wallet" onclick="connectWallet()">🔗 Connect Phantom Wallet</div>
-<p id="walletAddress"></p>
-
-<p style="margin-top:10px;color:#00e5ff;">
-CA: BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i
-</p>
+<p>Balance: <span id="balance">0</span> SOL</p>
+<p>Token: <span id="tokenBal">Loading...</span></p>
 </div>
 
-<!-- LIVE PRICE -->
+<!-- PRICE -->
 <div class="section">
-<h2>💰 Live Price: $<span id="price">Loading...</span></h2>
+<h2>💰 Live Price</h2>
+<h3>$<span id="price">Loading...</span></h3>
 </div>
 
 <!-- AI IMAGES -->
 <div class="section">
 <h2>🤖 AI Ecosystem</h2>
-
 <div class="grid">
 
 <div class="glass">
-<img class="ai-img" src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
-<p>AI Trading Engine</p>
+<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
+<p>AI Trading System</p>
 </div>
 
 <div class="glass">
-<img class="ai-img" src="https://images.unsplash.com/photo-1676299081847-824916de030a">
+<img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
+<p>AI Analytics Engine</p>
+</div>
+
+<div class="glass">
+<img src="https://images.unsplash.com/photo-1676299081847-824916de030a">
 <p>Meme AI Generator</p>
-</div>
-
-<div class="glass">
-<img class="ai-img" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
-<p>AI Analytics</p>
-</div>
-
-</div>
-</div>
-
-<!-- UTILITY -->
-<div class="section">
-<h2>⚡ Utility</h2>
-
-<div class="grid">
-
-<div class="glass">
-<h3>🧠 AI Tools</h3>
-<p>Trading signals, chatbot, meme generator</p>
-</div>
-
-<div class="glass">
-<h3>💰 Rewards</h3>
-<p>Staking, airdrop, referral system</p>
-</div>
-
-<div class="glass">
-<h3>🔗 Web3 Access</h3>
-<p>DAO voting, API access, ecosystem tools</p>
 </div>
 
 </div>
@@ -198,14 +100,20 @@ CA: BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i
 <!-- TOKENOMICS -->
 <div class="section">
 <h2>📊 Tokenomics</h2>
+<div class="glass">
+<p>Vault 45% | Liquidity 20% | Dev 15% | Marketing 10% | Team 10%</p>
+</div>
+</div>
 
+<!-- ROADMAP -->
+<div class="section">
+<h2>🚀 Roadmap</h2>
 <div class="grid">
 
-<div class="glass">Vault 45%<div class="bar"><div class="fill" style="width:45%"></div></div></div>
-<div class="glass">Liquidity 20%<div class="bar"><div class="fill" style="width:20%"></div></div></div>
-<div class="glass">Dev 15%<div class="bar"><div class="fill" style="width:15%"></div></div></div>
-<div class="glass">Marketing 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
-<div class="glass">Team 10%<div class="bar"><div class="fill" style="width:10%"></div></div></div>
+<div class="glass">Phase 1: Launch</div>
+<div class="glass">Phase 2: Growth</div>
+<div class="glass">Phase 3: AI Utility</div>
+<div class="glass">Phase 4: Expansion</div>
 
 </div>
 </div>
@@ -213,27 +121,28 @@ CA: BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i
 <!-- WHITEPAPER -->
 <div class="section">
 <h2>📄 Whitepaper</h2>
-
 <div class="glass">
 <p>
-SatoshiAI is a next-generation AI + Web3 ecosystem built on Solana.
-It combines decentralized finance, automation, AI intelligence, and scalable blockchain utility.
+SatoshiAI is a real Web3 + AI ecosystem built on Solana.
+Future includes staking, DAO, AI automation, and decentralized intelligence layer.
 </p>
 </div>
 </div>
 
-<!-- SOCIAL -->
+<!-- STAKING (UI ONLY - NEED SMART CONTRACT) -->
 <div class="section">
-<h2>🌐 Community</h2>
+<h2>💰 Staking (Smart Contract Ready)</h2>
 
-<a class="btn" href="https://t.me/satosiiAI">Telegram</a>
-<a class="btn" href="https://x.com/satosi_ai">X (Twitter)</a>
+<div class="glass">
+<input placeholder="Enter amount">
+<div class="btn">Stake (coming smart contract)</div>
+<div class="btn">Claim Rewards</div>
+</div>
 </div>
 
 <!-- CHART -->
 <div class="section">
 <h2>📊 Live Chart</h2>
-
 <iframe
 src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
 width="100%" height="450"
@@ -241,42 +150,50 @@ style="border:none;border-radius:14px;">
 </iframe>
 </div>
 
-<!-- FOOTER -->
-<footer>
-© 2026 SatoshiAI Ecosystem • AI + Web3 Future
-</footer>
+<!-- SOCIAL -->
+<div class="section">
+<h2>🌐 Community</h2>
+<a class="btn" href="https://t.me/satosiiAI">Telegram</a>
+<a class="btn" href="https://x.com/satosi_ai">X (Twitter)</a>
+</div>
 
-<!-- WALLET -->
 <script>
+const connection = new solanaWeb3.Connection(
+solanaWeb3.clusterApiUrl("mainnet-beta")
+);
+
 async function connectWallet(){
 try{
 if(window.solana && window.solana.isPhantom){
 const resp = await window.solana.connect();
-document.getElementById("walletAddress").innerText =
-"Connected: " + resp.publicKey.toString();
-}else{
-alert("Install Phantom Wallet");
-}
-}catch(e){}
-}
-</script>
+const pubkey = resp.publicKey.toString();
 
-<!-- PRICE -->
-<script>
-async function getPrice(){
+document.getElementById("wallet").innerText = pubkey;
+
+// SOL balance
+const balance = await connection.getBalance(resp.publicKey);
+document.getElementById("balance") =
+document.getElementById("balance").innerText = balance / solanaWeb3.LAMPORTS_PER_SOL;
+}
+}catch(e){
+alert("Wallet connect failed");
+}
+}
+
+// PRICE
+async function price(){
 const ca="BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
-
 const res=await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`);
 const data=await res.json();
 
-if(data.pairs && data.pairs.length>0){
+if(data.pairs?.length){
 document.getElementById("price").innerText =
 parseFloat(data.pairs[0].priceUsd).toFixed(6);
 }
 }
 
-getPrice();
-setInterval(getPrice,10000);
+price();
+setInterval(price,10000);
 </script>
 
 </body>
