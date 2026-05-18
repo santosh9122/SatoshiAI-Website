@@ -136,14 +136,34 @@
         .dist-seg.mkt{background:#FF00E5;flex:10;}
         .dist-seg.team{background:var(--accent-green);flex:10;}
         .dist-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.8rem;font-size:.8rem;color:var(--text-secondary);}
-        /* CHART */
-        .chart-box{text-align:center;}
-        .chart-box h3{font-family:'Orbitron',sans-serif;color:var(--primary-purple);margin-bottom:.5rem;}
-        .chart-sub{color:var(--text-secondary);font-size:.9rem;margin-bottom:2rem;}
-        .chart-ph{border:2px dashed rgba(123,47,255,.3);border-radius:16px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:rgba(123,47,255,.03);}
-        .chart-ph .icon{font-size:3.5rem;opacity:.3;}
-        .chart-ph p{color:var(--text-secondary);font-size:.95rem;}
-        .chart-ph small{color:var(--text-secondary);opacity:.6;font-size:.8rem;}
+        // REAL AI CHAT
+async function send(){
+  let input = document.getElementById("input").value;
+  let chat = document.getElementById("chat");
+
+  chat.innerHTML += `<p>You: ${input}</p>`;
+
+  const res = await fetch("http://localhost:3000/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message: input })
+  });
+
+  const data = await res.json();
+  chat.innerHTML += `<p>AI: ${data.content}</p>`;
+}
+
+// LIVE PRICE
+async function loadPrice(){
+  const res = await fetch("https://api.dexscreener.com/latest/dex/tokens/BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i");
+  const data = await res.json();
+
+  document.getElementById("price").innerText = "$" + data.pairs[0].priceUsd;
+}
+setInterval(loadPrice, 5000);
+        
         /* UTILITY */
         .utility-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;}
         .util-card h3{font-family:'Orbitron',sans-serif;color:var(--accent-cyan);font-size:1.2rem;margin-bottom:1rem;}
