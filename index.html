@@ -136,14 +136,12 @@
         .dist-seg.mkt{background:#FF00E5;flex:10;}
         .dist-seg.team{background:var(--accent-green);flex:10;}
         .dist-legend{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.8rem;font-size:.8rem;color:var(--text-secondary);}
-        /* CHART */
-        .chart-box{text-align:center;}
-        .chart-box h3{font-family:'Orbitron',sans-serif;color:var(--primary-purple);margin-bottom:.5rem;}
-        .chart-sub{color:var(--text-secondary);font-size:.9rem;margin-bottom:2rem;}
-        .chart-ph{border:2px dashed rgba(123,47,255,.3);border-radius:16px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:rgba(123,47,255,.03);}
-        .chart-ph .icon{font-size:3.5rem;opacity:.3;}
-        .chart-ph p{color:var(--text-secondary);font-size:.95rem;}
-        .chart-ph small{color:var(--text-secondary);opacity:.6;font-size:.8rem;}
+        <!-- LIVE CHART -->
+<section class="p-10 glass text-center">
+<h2 class="text-3xl mb-4">Live Price Chart</h2>
+<iframe src="https://dexscreener.com/solana/BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i" 
+width="100%" height="400"></iframe>
+</section>
         /* UTILITY */
         .utility-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;}
         .util-card h3{font-family:'Orbitron',sans-serif;color:var(--accent-cyan);font-size:1.2rem;margin-bottom:1rem;}
@@ -162,7 +160,45 @@
         .rm-card ul{list-style:none;}
         .rm-card li{padding:.5rem 0 .5rem 1.4rem;position:relative;color:var(--text-secondary);font-size:.95rem;}
         .rm-card li::before{content:'▹';position:absolute;left:0;color:var(--accent-cyan);font-size:1.1rem;}
-        /* CA */
+      <script>
+function send(){
+    let input = document.getElementById("input").value.trim();
+    let chat = document.getElementById("chat");
+    
+    if (input === "") return;
+
+    // 1. Display user message
+    chat.innerHTML += `<p class="text-blue-300">You: ${input}</p>`;
+    document.getElementById("input").value = ""; // Clear input immediately
+
+    // 2. Simulate AI processing delay
+    chat.innerHTML += `<p class="text-green-300 animate-pulse">AI: Thinking...</p>`;
+
+    // 3. Simulate a real AI response (Replace this block with your actual API call)
+    let simulatedReply = "Analyzing your request about satAI... As an AI, I can tell you that the future of AI and Web3 is rapidly evolving. What specific aspect of the satAI ecosystem are you most interested in learning about?";
+    
+    // In a real application, you would make an API call here, like:
+    /*
+    fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: input })
+    })
+    .then(response => response.json())
+    .then(data => {
+        chat.innerHTML += `<p class="text-green-300">AI: ${data.reply}</p>`;
+    })
+    .catch(error => {
+        chat.innerHTML += `<p class="text-red-300">AI Error: Could not connect to the server. ${error.message}</p>`;
+    });
+    */
+
+    chat.innerHTML += `<p class="text-green-300">AI: ${simulatedReply}</p>`;
+}
+</script>
+    /* CA */
         .ca-badge{display:flex;flex-direction:column;gap:.4rem;}
         .ca-badge .network{font-size:.8rem;color:var(--accent-cyan);letter-spacing:1px;text-transform:uppercase;}
         .ca-address{font-family:monospace;font-size:.82rem;word-break:break-all;padding:.9rem;background:rgba(123,47,255,.1);border:1px solid rgba(123,47,255,.3);border-radius:10px;color:var(--text-secondary);cursor:pointer;transition:background .3s;}
