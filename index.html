@@ -533,67 +533,38 @@ const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot</title>
+</head>
+<body style="margin:0;font-family:Arial;">
+
+<h2 style="text-align:center;">SatoshiAI Chatbot</h2>
+
+<div id="chat"></div>
+
+<input id="input" placeholder="Type..." style="width:80%;padding:10px;">
+<button onclick="send()">Send</button>
+
+<script>
+async function send(){
+  const input = document.getElementById("input").value;
+
+  const res = await fetch("/api/chat", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ prompt: input })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("chat").innerHTML +=
+    "<p><b>You:</b> "+input+"</p>" +
+    "<p><b>AI:</b> "+data.reply+"</p>";
+}
 </script>
-
-<!-- CHATBOT BUTTON -->
-  <div id="chat-toggle">💬</div>
-
-  <!-- CHATBOT BOX -->
-  <div id="chat-container">
-    <iframe
-      src="https://chatbot-12y9.onrender.com/"
-      frameborder="0">
-    </iframe>
-  </div>
-
-  <style>
-  #chat-toggle{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    width:65px;
-    height:65px;
-    background:#00ffd5;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    cursor:pointer;
-    z-index:99999;
-  }
-
-  #chat-container{
-    position:fixed;
-    bottom:95px;
-    right:20px;
-    width:380px;
-    height:600px;
-    background:#fff;
-    border-radius:20px;
-    overflow:hidden;
-    display:none;
-    z-index:99999;
-  }
-
-  #chat-container iframe{
-    width:100%;
-    height:100%;
-    border:none;
-  }
-  </style>
-
-  <script>
-  const toggle = document.getElementById("chat-toggle");
-  const chat = document.getElementById("chat-container");
-
-  toggle.onclick = () => {
-    chat.style.display =
-      chat.style.display === "block"
-      ? "none"
-      : "block";
-  };
-  </script>
 
 </body>
 </html>
