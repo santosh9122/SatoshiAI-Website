@@ -3,274 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SatoshiAI - REAL Web3 dApp</title>
+<title>satAI Web3</title>
 
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:#05060a;
-color:#fff;
-overflow-x:hidden;
+body {
+  background: url('https://images.unsplash.com/photo-1677442136019-21780ecad995') no-repeat center center/cover;
 }
-
-.bg{
-position:fixed;
-width:100%;
-height:100%;
-background:radial-gradient(circle,#00e5ff22,transparent 60%),
-radial-gradient(circle,#ff00ff22,transparent 60%);
-z-index:-1;
+.glass {
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
 }
-
-.section{padding:60px 20px;max-width:1100px;margin:auto;text-align:center;}
-
-.glass{
-background:rgba(255,255,255,0.05);
-padding:20px;
-border-radius:16px;
-margin:10px;
-backdrop-filter:blur(12px);
-}
-
-.btn{
-padding:12px 20px;
-background:#00e5ff;
-color:#000;
-border-radius:10px;
-display:inline-block;
-cursor:pointer;
-margin:10px;
-}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-
-img{width:100%;border-radius:12px;}
-
-h2{color:#00e5ff}
 </style>
 </head>
 
-<body>
+<body class="text-white">
 
-<div class="bg"></div>
+<!-- NAV -->
+<nav class="flex justify-between p-5 glass">
+<h1 class="text-green-400 text-xl font-bold">satAI</h1>
+<div>
+<a href="https://x.com/satosi_ai" target="_blank">X</a> |
+<a href="https://t.me/satosiiAI" target="_blank">Telegram</a>
+</div>
+</nav>
 
 <!-- HERO -->
-<div class="section">
-<h1>🚀 SatoshiAI REAL Web3 dApp</h1>
+<section class="text-center py-20 glass">
+<h1 class="text-5xl font-bold">AI x Web3 Future</h1>
+<p class="text-gray-300 mt-4">SatoshiAI ecosystem on Solana</p>
+<p class="mt-4 text-green-400">CA: BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i</p>
+</section>
 
-<div class="btn" onclick="connectWallet()">Connect Phantom Wallet</div>
-<p id="wallet"></p>
+<!-- LIVE CHART -->
+<section class="p-10 glass text-center">
+<h2 class="text-3xl mb-4">Live Price Chart</h2>
+<iframe src="https://dexscreener.com/solana/BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i" 
+width="100%" height="400"></iframe>
+</section>
 
-<p>Balance: <span id="balance">0</span> SOL</p>
-<p>Token: <span id="tokenBal">Loading...</span></p>
+<!-- DASHBOARD -->
+<section class="grid md:grid-cols-3 gap-5 p-10 glass">
+<div class="p-5 bg-black rounded">
+<h3>Price</h3>
+<p>$ --</p>
 </div>
-
-<!-- PRICE -->
-<div class="section">
-<h2>💰 Live Price</h2>
-<h3>$<span id="price">Loading...</span></h3>
+<div class="p-5 bg-black rounded">
+<h3>Liquidity</h3>
+<p>$ --</p>
 </div>
-
-<!-- AI IMAGES -->
-<div class="section">
-<h2>🤖 AI Ecosystem</h2>
-<div class="grid">
-
-<div class="glass">
-<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995">
-<p>AI Trading System</p>
+<div class="p-5 bg-black rounded">
+<h3>Volume</h3>
+<p>$ --</p>
 </div>
+</section>
 
-<div class="glass">
-<img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5">
-<p>AI Analytics Engine</p>
-</div>
-
-<div class="glass">
-<img src="https://images.unsplash.com/photo-1676299081847-824916de030a">
-<p>Meme AI Generator</p>
-</div>
-
-</div>
-</div>
+<!-- SWAP -->
+<section class="text-center p-10 glass">
+<h2 class="text-2xl mb-4">Trade satAI</h2>
+<a href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i" 
+target="_blank" 
+class="bg-green-400 text-black px-6 py-3 rounded">
+Swap on Raydium
+</a>
+</section>
 
 <!-- TOKENOMICS -->
-<div class="section">
-<h2>📊 Tokenomics</h2>
-<div class="glass">
-<p>Vault 45% | Liquidity 20% | Dev 15% | Marketing 10% | Team 10%</p>
-</div>
-</div>
+<section class="p-10 glass">
+<h2 class="text-3xl text-center mb-6">Tokenomics</h2>
+<ul class="text-center">
+<li>Total Supply: 1B</li>
+<li>Liquidity: 40%</li>
+<li>Marketing: 20%</li>
+<li>Development: 20%</li>
+<li>Community: 20%</li>
+</ul>
+</section>
 
 <!-- ROADMAP -->
-<div class="section">
-<h2>🚀 Roadmap</h2>
-<div class="grid">
-
-<div class="glass">Phase 1: Launch</div>
-<div class="glass">Phase 2: Growth</div>
-<div class="glass">Phase 3: AI Utility</div>
-<div class="glass">Phase 4: Expansion</div>
-
-</div>
-</div>
+<section class="p-10 glass text-center">
+<h2 class="text-3xl mb-6">Roadmap</h2>
+<p>Phase 1: Launch 🚀</p>
+<p>Phase 2: Community Growth 📈</p>
+<p>Phase 3: AI Integration 🤖</p>
+<p>Phase 4: Web3 Expansion 🌐</p>
+</section>
 
 <!-- WHITEPAPER -->
-<div class="section">
-<h2>📄 Whitepaper</h2>
-<div class="glass">
-<p>
-SatoshiAI is a real Web3 + AI ecosystem built on Solana.
-Future includes staking, DAO, AI automation, and decentralized intelligence layer.
-</p>
-</div>
-</div>
+<section class="text-center p-10 glass">
+<h2 class="text-2xl mb-4">Whitepaper</h2>
+<a href="#" class="bg-white text-black px-6 py-3 rounded">Download</a>
+</section>
 
-<!-- STAKING (UI ONLY - NEED SMART CONTRACT) -->
-<div class="section">
-<h2>💰 Staking (Smart Contract Ready)</h2>
+<!-- STAKE (UI DEMO) -->
+<section class="text-center p-10 glass">
+<h2 class="text-2xl mb-4">Stake satAI</h2>
+<button onclick="alert('Stake feature coming soon')" class="bg-green-400 px-6 py-3 rounded text-black">
+Stake Now
+</button>
+</section>
 
-<div class="glass">
-<input placeholder="Enter amount">
-<div class="btn">Stake (coming smart contract)</div>
-<div class="btn">Claim Rewards</div>
-</div>
-</div>
-
-<!-- CHART -->
-<div class="section">
-<h2>📊 Live Chart</h2>
-<iframe
-src="https://dexscreener.com/solana/4DSvCr53u58wQjaGx7wQtQAp3Z4HX8CAS2e495tNDWKF?embed=1&theme=dark"
-width="100%" height="450"
-style="border:none;border-radius:14px;">
-</iframe>
-</div>
-
-<!-- SOCIAL -->
-<div class="section">
-<h2>🌐 Community</h2>
-<a class="btn" href="https://t.me/satosiiAI">Telegram</a>
-<a class="btn" href="https://x.com/satosi_ai">X (Twitter)</a>
-</div>
-
+<!-- AI CHATBOT -->
 <script>
-const connection = new solanaWeb3.Connection(
-solanaWeb3.clusterApiUrl("mainnet-beta")
-);
+function send(){
+    let input = document.getElementById("input").value.trim();
+    let chat = document.getElementById("chat");
+    
+    if (input === "") return;
 
-async function connectWallet(){
-try{
-if(window.solana && window.solana.isPhantom){
-const resp = await window.solana.connect();
-const pubkey = resp.publicKey.toString();
+    // 1. Display user message
+    chat.innerHTML += `<p class="text-blue-300">You: ${input}</p>`;
+    document.getElementById("input").value = ""; // Clear input immediately
 
-document.getElementById("wallet").innerText = pubkey;
+    // 2. Simulate AI processing delay
+    chat.innerHTML += `<p class="text-green-300 animate-pulse">AI: Thinking...</p>`;
 
-// SOL balance
-const balance = await connection.getBalance(resp.publicKey);
-document.getElementById("balance") =
-document.getElementById("balance").innerText = balance / solanaWeb3.LAMPORTS_PER_SOL;
-}
-}catch(e){
-alert("Wallet connect failed");
-}
-}
+    // 3. Simulate a real AI response (Replace this block with your actual API call)
+    let simulatedReply = "Analyzing your request about satAI... As an AI, I can tell you that the future of AI and Web3 is rapidly evolving. What specific aspect of the satAI ecosystem are you most interested in learning about?";
+    
+    // In a real application, you would make an API call here, like:
+    /*
+    fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt: input })
+    })
+    .then(response => response.json())
+    .then(data => {
+        chat.innerHTML += `<p class="text-green-300">AI: ${data.reply}</p>`;
+    })
+    .catch(error => {
+        chat.innerHTML += `<p class="text-red-300">AI Error: Could not connect to the server. ${error.message}</p>`;
+    });
+    */
 
-// PRICE
-async function price(){
-const ca="BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
-const res=await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`);
-const data=await res.json();
-
-if(data.pairs?.length){
-document.getElementById("price").innerText =
-parseFloat(data.pairs[0].priceUsd).toFixed(6);
-}
-}
-
-price();
-setInterval(price,10000);
-
-<script>
-/* =========================
-   PRICE FUNCTION
-========================= */
-async function price(){
-  try{
-    const ca="BHSd65jRJz3hnzKtuwnmCWWah3qwNVKZ6bHg4wLmri7i";
-
-    const res=await fetch(`https://api.dexscreener.com/latest/dex/tokens/${ca}`);
-    const data=await res.json();
-
-    if(data.pairs && data.pairs.length>0){
-      document.getElementById("price").innerText =
-      parseFloat(data.pairs[0].priceUsd).toFixed(6);
-    }
-  }catch(e){
-    console.log("Price error",e);
-  }
-}
-
-price();
-setInterval(price,10000);
-
-
-/* =========================
-   PHANTOM WALLET CONNECT
-========================= */
-
-function getProvider() {
-  if ("solana" in window) {
-    if (window.solana.isPhantom) return window.solana;
-  }
-  return null;
-}
-
-async function connectWallet() {
-  try {
-    const provider = getProvider();
-
-    if (!provider) {
-      alert("Phantom Wallet not found");
-      window.open("https://phantom.app/", "_blank");
-      return;
-    }
-
-    const resp = await provider.connect();
-    const wallet = resp.publicKey.toString();
-
-    document.getElementById("wallet").innerText = wallet;
-
-    getBalance(resp.publicKey);
-  } catch (err) {
-    console.log("Wallet error", err);
-  }
-}
-
-
-/* =========================
-   SOL BALANCE
-========================= */
-
-async function getBalance(publicKey) {
-  try {
-    const connection = new solanaWeb3.Connection(
-      solanaWeb3.clusterApiUrl("mainnet-beta")
-    );
-
-    const balance = await connection.getBalance(publicKey);
-
-    document.getElementById("balance").innerText =
-      (balance / solanaWeb3.LAMPORTS_PER_SOL).toFixed(4) + " SOL";
-
-  } catch (e) {
-    console.log("Balance error", e);
-  }
+    chat.innerHTML += `<p class="text-green-300">AI: ${simulatedReply}</p>`;
 }
 </script>
+
+<!-- FOOTER -->
+<footer class="text-center p-5 glass">
+© 2026 satAI
+</footer>
+
+<script>
+function send(){
+let input=document.getElementById("input").value;
+let chat=document.getElementById("chat");
+
+chat.innerHTML+="<p>You: "+input+"</p>";
+
+let reply="AI: satAI is the future of AI + Web3 🚀";
+chat.innerHTML+="<p>"+reply+"</p>";
+
+document.getElementById("input").value="";
+}
+</script>
+
 </body>
 </html>
