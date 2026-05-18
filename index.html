@@ -534,5 +534,24 @@ const io=new IntersectionObserver(entries=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
 </script>
+<script>
+async function sendMessage() {
+    let input = document.getElementById("input").value;
+
+    const res = await fetch("https://chatbot-12y9.onrender.com/api/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ prompt: input })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("chat").innerHTML +=
+        "<p><b>You:</b> " + input + "</p>" +
+        "<p><b>AI:</b> " + data.reply + "</p>";
+}
+</script>
 </body>
 </html>
