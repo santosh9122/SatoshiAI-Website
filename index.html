@@ -533,38 +533,109 @@ const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+<!-- CHAT BUTTON -->
+<div id="chat-btn">💬</div>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Chatbot</title>
-</head>
-<body style="margin:0;font-family:Arial;">
+<!-- CHAT BOX -->
+<div id="chat-box">
+  <div id="messages"></div>
 
-<h2 style="text-align:center;">SatoshiAI Chatbot</h2>
+  <div style="display:flex; gap:5px;">
+    <input id="msg" placeholder="Type message..." />
+    <button onclick="send()">Send</button>
+  </div>
+</div>
 
-<div id="chat"></div>
+<style>
+#chat-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:#00ffd5;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  cursor:pointer;
+  z-index:999999;
+  box-shadow:0 0 15px rgba(0,255,213,0.4);
+}
 
-<input id="input" placeholder="Type..." style="width:80%;padding:10px;">
-<button onclick="send()">Send</button>
+#chat-box{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:320px;
+  height:420px;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  padding:10px;
+  z-index:999999;
+}
+
+#messages{
+  flex:1;
+  overflow-y:auto;
+  font-family:Arial;
+  font-size:14px;
+  margin-bottom:10px;
+  padding:5px;
+}
+
+#msg{
+  flex:1;
+  padding:8px;
+}
+</style>
 
 <script>
+const btn = document.getElementById("chat-btn");
+const box = document.getElementById("chat-box");
+const msgBox = document.getElementById("messages");
+
+btn.onclick = () => {
+  box.style.display = box.style.display === "block" ? "none" : "block";
+};
+
 async function send(){
-  const input = document.getElementById("input").value;
+  const input = document.getElementById("msg");
+  const text = input.value;
 
-  const res = await fetch("/api/chat", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ prompt: input })
-  });
+  if(!text) return;
 
-  const data = await res.json();
+  // USER message
+  msgBox.innerHTML += "<div><b>You:</b> " + text + "</div>";
 
-  document.getElementById("chat").innerHTML +=
-    "<p><b>You:</b> "+input+"</p>" +
-    "<p><b>AI:</b> "+data.reply+"</p>";
+  input.value = "";
+
+  // auto scroll
+  msgBox.scrollTop = msgBox.scrollHeight;
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: text })
+    });
+
+    const data = await res.json();
+
+    // AI message
+    msgBox.innerHTML += "<div><b>AI:</b> " + data.reply + "</div>";
+
+    // auto scroll again
+    msgBox.scrollTop = msgBox.scrollHeight;
+
+  } catch (err) {
+    msgBox.innerHTML += "<div style='color:red'>Server error</div>";
+  }
 }
 </script>
-
 </body>
 </html>
