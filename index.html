@@ -638,60 +638,163 @@ document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
     <input id="msg" placeholder="Type message..." />
     <button onclick="send()">Send</button>
   </div>
+      </div>
+<!-- AI CHATBOT WIDGET START -->
+
+<div id="ai-chat-btn">💬</div>
+
+<div id="ai-chat-box">
+  <div id="ai-messages"></div>
+
+  <div id="ai-input">
+    <input id="ai-msg" placeholder="Type message..." />
+    <button onclick="aiSend()">Send</button>
+  </div>
 </div>
+
+<style>
+
+#ai-chat-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  background:#00ffd5;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  cursor:pointer;
+  z-index:999999;
+}
+
+#ai-chat-box{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:340px;
+  height:450px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:999999;
+}
+
+#ai-messages{
+  flex:1;
+  padding:10px;
+  overflow-y:auto;
+  background:#f5f5f5;
+  font-family:Arial;
+}
+
+.ai-user{
+  text-align:right;
+  margin:8px 0;
+}
+
+.ai-bot{
+  text-align:left;
+  margin:8px 0;
+}
+
+.ai-bubble{
+  display:inline-block;
+  padding:10px;
+  border-radius:10px;
+  max-width:80%;
+}
+
+.ai-user .ai-bubble{
+  background:#00ffd5;
+}
+
+.ai-bot .ai-bubble{
+  background:#fff;
+  border:1px solid #ddd;
+}
+
+#ai-input{
+  display:flex;
+  padding:10px;
+  gap:5px;
+  border-top:1px solid #ddd;
+  background:white;
+}
+
+#ai-msg{
+  flex:1;
+  padding:10px;
+}
+
+button{
+  padding:10px 15px;
+  background:#00ffd5;
+  border:none;
+  cursor:pointer;
+}
+
+</style>
 
 <script>
 
-const API = "https://chatbot-12y9.onrender.com/api/chat";
+const AI_API = "https://chatbot-12y9.onrender.com/api/chat";
 
-const btn = document.getElementById("chat-btn");
-const box = document.getElementById("chat-box");
-const messages = document.getElementById("messages");
+const btn = document.getElementById("ai-chat-btn");
+const box = document.getElementById("ai-chat-box");
+const messages = document.getElementById("ai-messages");
 
 btn.onclick = () => {
-  box.style.display = box.style.display === "flex" ? "none" : "flex";
+  box.style.display =
+    box.style.display === "flex" ? "none" : "flex";
 };
 
-async function send() {
+async function aiSend() {
 
-  const input = document.getElementById("msg");
+  const input = document.getElementById("ai-msg");
   const text = input.value.trim();
 
   if (!text) return;
 
   messages.innerHTML += `
-    <div class="msg user">
-      <div class="bubble">${text}</div>
+    <div class="ai-user">
+      <div class="ai-bubble">${text}</div>
     </div>
   `;
 
   input.value = "";
-
   messages.scrollTop = messages.scrollHeight;
 
   try {
 
-    const res = await fetch(API, {
+    const res = await fetch(AI_API, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ prompt: text })
+      body: JSON.stringify({
+        prompt: text
+      })
     });
 
     const data = await res.json();
 
     messages.innerHTML += `
-      <div class="msg bot">
-        <div class="bubble">${data.reply}</div>
+      <div class="ai-bot">
+        <div class="ai-bubble">${data.reply}</div>
       </div>
     `;
 
   } catch (err) {
 
     messages.innerHTML += `
-      <div class="msg bot">
-        <div class="bubble">Server error</div>
+      <div class="ai-bot">
+        <div class="ai-bubble">Server error</div>
       </div>
     `;
   }
@@ -701,5 +804,6 @@ async function send() {
 
 </script>
 
+<!-- AI CHATBOT WIDGET END -->
 </body>
 </html>
