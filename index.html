@@ -534,53 +534,8 @@ const io=new IntersectionObserver(entries=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
 
-    <!-- CHAT BUTTON -->
-<div id="chat-btn">💬</div>
-
-<!-- CHAT BOX -->
-<div id="chat-box">
-  <div id="messages"></div>
-
-  <div style="display:flex; gap:5px;">
-    <input id="msg" placeholder="Type message..." />
-    <button onclick="send()">Send</button>
-  </div>
-</div>
-
-<style>
-#chat-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  background:#00ffd5;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  cursor:pointer;
-  z-index:999999;
-}
-
-#chat-box{
-  position:fixed;
-  bottom:90px;
-  right:20px;
-  width:320px;
-  height:420px;
-  background:white;
-  border-radius:12px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.2);
-  display:none;
-  flex-direction:column;
-  padding:10px;
-  z-index:999999;
-}
-</style>
-
 <script>
+
 window.onload = function () {
 
   const btn = document.getElementById("chat-btn");
@@ -588,35 +543,53 @@ window.onload = function () {
   const msgBox = document.getElementById("messages");
 
   btn.onclick = () => {
-    box.style.display = box.style.display === "flex" ? "none" : "flex";
+    box.style.display =
+      box.style.display === "flex"
+        ? "none"
+        : "flex";
   };
 
   window.send = async function () {
+
     const input = document.getElementById("msg");
     const text = input.value;
 
     if (!text) return;
 
-    msgBox.innerHTML += "<div><b>You:</b> " + text + "</div>";
+    msgBox.innerHTML +=
+      "<div><b>You:</b> " + text + "</div>";
+
     input.value = "";
 
     try {
+
       const res = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: text })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          prompt: text
+        })
       });
 
       const data = await res.json();
 
-      msgBox.innerHTML += "<div><b>AI:</b> " + data.reply + "</div>";
+      msgBox.innerHTML +=
+        "<div><b>AI:</b> " + data.reply + "</div>";
 
     } catch (err) {
-    msgBox.innerHTML += "<div style='color:red'>Server error</div>";
+
+      msgBox.innerHTML +=
+        "<div style='color:red'>Server error</div>";
+
     }
+
   };
 
 };
+
 </script>
 </body>
 </html>
+
