@@ -534,22 +534,28 @@ const io=new IntersectionObserver(entries=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
 
-        <!-- AI CHATBOT WIDGET START -->
+<!-- ===== AI CHATBOT START ===== -->
 
-<div id="ai-chat-btn">💬</div>
+<div id="ai-btn">💬</div>
 
-<div id="ai-chat-box">
-  <div id="ai-messages"></div>
+<div id="ai-box">
+
+  <div id="ai-top">AI Assistant</div>
+
+  <div id="ai-msgs"></div>
+
+  <div id="ai-typing" style="display:none;">AI is typing...</div>
 
   <div id="ai-input">
-    <input id="ai-msg" placeholder="Type message..." />
-    <button onclick="aiSend()">Send</button>
+    <input id="ai-input-box" placeholder="Type message..." />
+    <button onclick="sendMsg()">➤</button>
   </div>
+
 </div>
 
 <style>
 
-#ai-chat-btn{
+#ai-btn{
   position:fixed;
   bottom:20px;
   right:20px;
@@ -565,12 +571,12 @@ document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
   z-index:999999;
 }
 
-#ai-chat-box{
+#ai-box{
   position:fixed;
   bottom:90px;
   right:20px;
-  width:340px;
-  height:450px;
+  width:350px;
+  height:480px;
   background:#fff;
   border-radius:12px;
   box-shadow:0 5px 20px rgba(0,0,0,0.2);
@@ -578,38 +584,44 @@ document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
   flex-direction:column;
   overflow:hidden;
   z-index:999999;
+  font-family:Arial;
 }
 
-#ai-messages{
+#ai-top{
+  background:#00ffd5;
+  padding:10px;
+  font-weight:bold;
+}
+
+#ai-msgs{
   flex:1;
   padding:10px;
   overflow-y:auto;
   background:#f5f5f5;
-  font-family:Arial;
 }
 
-.ai-user{
+.user{
   text-align:right;
   margin:8px 0;
 }
 
-.ai-bot{
+.bot{
   text-align:left;
   margin:8px 0;
 }
 
-.ai-bubble{
+.bubble{
   display:inline-block;
   padding:10px;
   border-radius:10px;
   max-width:80%;
 }
 
-.ai-user .ai-bubble{
+.user .bubble{
   background:#00ffd5;
 }
 
-.ai-bot .ai-bubble{
+.bot .bubble{
   background:#fff;
   border:1px solid #ddd;
 }
@@ -619,86 +631,100 @@ document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
   padding:10px;
   gap:5px;
   border-top:1px solid #ddd;
-  background:white;
 }
 
-#ai-msg{
+#ai-input-box{
   flex:1;
   padding:10px;
 }
 
 button{
-  padding:10px 15px;
+  padding:10px;
   background:#00ffd5;
   border:none;
   cursor:pointer;
+}
+
+#ai-typing{
+  font-size:12px;
+  padding:5px 10px;
+  color:gray;
 }
 
 </style>
 
 <script>
 
-const AI_API = "https://chatbot-12y9.onrender.com/api/chat";
+const API = "https://chatbot-12y9.onrender.com/api/chat";
 
-const btn = document.getElementById("ai-chat-btn");
-const box = document.getElementById("ai-chat-box");
-const messages = document.getElementById("ai-messages");
+// chat history memory
+let history = [];
+
+const btn = document.getElementById("ai-btn");
+const box = document.getElementById("ai-box");
+const msgs = document.getElementById("ai-msgs");
+const typing = document.getElementById("ai-typing");
 
 btn.onclick = () => {
   box.style.display =
     box.style.display === "flex" ? "none" : "flex";
 };
 
-async function aiSend() {
+async function sendMsg() {
 
-  const input = document.getElementById("ai-msg");
+  const input = document.getElementById("ai-input-box");
   const text = input.value.trim();
 
   if (!text) return;
 
-  messages.innerHTML += `
-    <div class="ai-user">
-      <div class="ai-bubble">${text}</div>
+  // user msg
+  msgs.innerHTML += `
+    <div class="user">
+      <div class="bubble">${text}</div>
     </div>
   `;
 
   input.value = "";
-  messages.scrollTop = messages.scrollHeight;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // show typing
+  typing.style.display = "block";
 
   try {
 
-    const res = await fetch(AI_API, {
+    const res = await fetch(API, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        prompt: text
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: text })
     });
 
     const data = await res.json();
 
-    messages.innerHTML += `
-      <div class="ai-bot">
-        <div class="ai-bubble">${data.reply}</div>
+    typing.style.display = "none";
+
+    // bot msg
+    msgs.innerHTML += `
+      <div class="bot">
+        <div class="bubble">${data.reply}</div>
       </div>
     `;
+
+    msgs.scrollTop = msgs.scrollHeight;
 
   } catch (err) {
 
-    messages.innerHTML += `
-      <div class="ai-bot">
-        <div class="ai-bubble">Server error</div>
+    typing.style.display = "none";
+
+    msgs.innerHTML += `
+      <div class="bot">
+        <div class="bubble">Server error</div>
       </div>
     `;
   }
-
-  messages.scrollTop = messages.scrollHeight;
 }
 
 </script>
 
-<!-- AI CHATBOT WIDGET END -->
+<!-- ===== AI CHATBOT END ===== -->
 </body>
 </html>
